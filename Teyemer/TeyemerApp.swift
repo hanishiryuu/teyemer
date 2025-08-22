@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct TeyemerApp: App {
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("Teyemer") {
             ContentView()
         }
     }
