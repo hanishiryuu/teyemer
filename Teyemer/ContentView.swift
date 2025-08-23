@@ -26,29 +26,35 @@ struct ContentView: View {
                     Text("Minutes")
                         .font(.caption)
                         .foregroundColor(.gray)
-                    TextField("Minutes", text: $durationMinStr)
-                        .frame(width: 80)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .onChange(of: durationMinStr) { oldVal, newVal in
-                            viewModel.durationMin = Int(newVal) ?? 0
-                        }
+                    TextField("Minutes", text: Binding(
+                        get: { String(viewModel.durationMin ?? 0) },
+                        set: { viewModel.durationMin = Int($0) ?? 0 }
+                    ))
+                    .frame(width: 80)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: durationMinStr) { oldVal, newVal in
+                        viewModel.durationMin = Int(newVal) ?? 0
+                    }
                 }
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Seconds")
                         .font(.caption)
                         .foregroundColor(.gray)
-                    TextField("Seconds", text: $durationSecStr)
-                        .frame(width: 80)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .onChange(of: durationSecStr) { oldVal, newVal in
-                            viewModel.durationSec = Int(newVal) ?? 0
-                        }
+                    TextField("Seconds", text: Binding(
+                        get: { String(viewModel.durationSec ?? 0) },
+                        set: { viewModel.durationSec = Int($0) ?? 0 }
+                    ))
+                    .frame(width: 80)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: durationSecStr) { oldVal, newVal in
+                        viewModel.durationSec = Int(newVal) ?? 0
+                    }
                 }
             }
             
             Button(action: {
-                viewModel.isRunning = !viewModel.isRunning
+                viewModel.toggleTimer()
             }) {
                 if viewModel.isRunning {
                     Text("Stop Teyemer")
