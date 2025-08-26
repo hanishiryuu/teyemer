@@ -13,5 +13,12 @@ struct TeyemerApp: App {
         WindowGroup("Teyemer") {
             ContentView()
         }
+        
+        #if os(macOS)
+        Settings {
+            SoundSettingsView()
+                .frame(minWidth: 300, minHeight: 200)
+        }
+        #endif
     }
 }

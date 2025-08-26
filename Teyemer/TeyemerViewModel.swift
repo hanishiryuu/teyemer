@@ -15,11 +15,12 @@ class TeyemerViewModel: ObservableObject {
     @Published var durationSec: Int? = 0
     @Published var isRunning: Bool = false
     @Published var timer: Timer?
-    
+    @AppStorage("sound") var selectedSound: String = "metal-pipe.mp3"
+
     func startTimer() {
         let duration = Double(durationMin! * 60 + durationSec!)
-        
-        timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(playSound), userInfo: nil, repeats: true)
+
+        timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(playSoundWithName), userInfo: nil, repeats: true)
         isRunning = true
     }
     
@@ -37,16 +38,17 @@ class TeyemerViewModel: ObservableObject {
         startTimer()
     }
     
-    @objc func playSound() {
-        if let path = Bundle.main.path(forResource: "metal-pipe.mp3", ofType: nil) {
-            
+    @objc func playSoundWithName() {
+        playSound(filename: selectedSound)
+    }
+
+    func playSound(filename: String) {
+        if let path = Bundle.main.path(forResource: filename, ofType: nil) {
             let url = URL(fileURLWithPath: path)
-            
             do {
                 try player = AVAudioPlayer(contentsOf: url)
                 player?.play()
-
-            } catch let error as NSError {
+            } catch {
                 print("audioPlayer error \(error.localizedDescription)")
             }
         }

@@ -55,6 +55,17 @@ struct ContentView: View {
             
             Button(action: {
                 viewModel.toggleTimer()
+//                if let path = Bundle.main.resourcePath {
+//                    do {
+//                        let sounds = try FileManager.default.contentsOfDirectory(atPath: path)
+//                        for sound in sounds {
+//                            print(sound)
+//                        }
+//                    } catch {
+//                        print("Ошибка \(error)")
+//                    }
+//                }
+                
             }) {
                 if viewModel.isRunning {
                     Text("Stop Teyemer")
@@ -63,8 +74,17 @@ struct ContentView: View {
                 }
                 
             }
+            Button(action: {
+                viewModel.playSoundWithName()
+            }) {
+                    Text("Play sound")               
+            }
             
-            Text("Teyemer!")
+            if viewModel.isRunning {
+                Text("Teyemer is running!")
+            } else {
+                Text("Teyemer!")
+            }
         }
         .padding()
     }
